@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmaCare — Hospital Pharmacy Management</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     LOGIN PAGE
+══════════════════════════════════════════ -->
+<div id="loginPage" class="auth-page">
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <div class="auth-logo-big">🏥</div>
+      <h1>PharmaCare Hospital Pharmacy</h1>
+      <p>Complete pharmacy inventory management system. Track medicines, batches, sales, billing and analytics — all in one place.</p>
+      <div class="auth-features">
+        <div class="auth-feat-item">
+          <div class="feat-icon">💊</div>
+          <span>Medicine & Batch Tracking with Expiry Alerts</span>
+        </div>
+        <div class="auth-feat-item">
+          <div class="feat-icon">🧾</div>
+          <span>Automatic Billing & Printable Receipts</span>
+        </div>
+        <div class="auth-feat-item">
+          <div class="feat-icon">📊</div>
+          <span>Sales Analytics & Revenue Charts</span>
+        </div>
+        <div class="auth-feat-item">
+          <div class="feat-icon">🔔</div>
+          <span>Smart Low Stock & Expiry Notifications</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-form-box">
+      <div class="auth-form-logo">
+        <div class="logo-icon">💊</div>
+        <h2>PharmaCare</h2>
+      </div>
+      <h3>Welcome back</h3>
+      <p>Sign in to your pharmacy account</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter your username" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Sign In →</button>
+      </form>
+      <div class="auth-switch">
+        New to PharmaCare? <a onclick="showRegister()">Create account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     REGISTER PAGE
+══════════════════════════════════════════ -->
+<div id="registerPage" class="auth-page" style="display:none;">
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <div class="auth-logo-big">🏥</div>
+      <h1>Join PharmaCare</h1>
+      <p>Set up your hospital pharmacy account and start managing your inventory efficiently from day one.</p>
+      <div class="auth-features">
+        <div class="auth-feat-item">
+          <div class="feat-icon">🔒</div>
+          <span>Secure login with session management</span>
+        </div>
+        <div class="auth-feat-item">
+          <div class="feat-icon">👥</div>
+          <span>Multi-user support for your pharmacy team</span>
+        </div>
+        <div class="auth-feat-item">
+          <div class="feat-icon">⚡</div>
+          <span>Up and running in minutes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-form-box">
+      <div class="auth-form-logo">
+        <div class="logo-icon">💊</div>
+        <h2>PharmaCare</h2>
+      </div>
+      <h3>Create account</h3>
+      <p>Fill in your details to get started</p>
+      <form id="registerForm">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="regUsername" placeholder="Choose a username" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" placeholder="Choose a strong password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Create Account →</button>
+      </form>
+      <div class="auth-switch">
+        Already have an account? <a onclick="showLogin()">Sign in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DASHBOARD PAGE
+══════════════════════════════════════════ -->
+<div id="dashboardPage" style="display:none;">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">💊</div>
+      <div class="brand-text">
+        <h2>PharmaCare</h2>
+        <span>Hospital Pharmacy</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Dashboard</div>
+      <button class="nav-btn active" onclick="showSection('overview')">
+        <span class="nav-ic">🏠</span>
+        <span class="nav-label-text">Overview</span>
+      </button>
+
+      <div class="nav-label">Inventory</div>
+      <button class="nav-btn" onclick="showSection('medicines')">
+        <span class="nav-ic">💊</span>
+        <span class="nav-label-text">Medicines</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('batches')">
+        <span class="nav-ic">📦</span>
+        <span class="nav-label-text">Medicine Batches</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('suppliers')">
+        <span class="nav-ic">🏢</span>
+        <span class="nav-label-text">Suppliers</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('purchases')">
+        <span class="nav-ic">🏭</span>
+        <span class="nav-label-text">Purchases</span>
+      </button>
+
+      <div class="nav-label">Sales</div>
+      <button class="nav-btn" onclick="showSection('sell')">
+        <span class="nav-ic">🛒</span>
+        <span class="nav-label-text">Sell Medicine</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('billing')">
+        <span class="nav-ic">🧾</span>
+        <span class="nav-label-text">Billing</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('sales')">
+        <span class="nav-ic">📋</span>
+        <span class="nav-label-text">Sales History</span>
+      </button>
+      <button class="nav-btn" onclick="showSection('analytics')">
+        <span class="nav-ic">📊</span>
+        <span class="nav-label-text">Analytics</span>
+      </button>
+
+      <div class="nav-label">Alerts</div>
+      <button class="nav-btn" id="navExpiry" onclick="showSection('expiry')">
+        <span class="nav-ic">📅</span>
+        <span class="nav-label-text">Expiry Alerts</span>
+        <span class="nav-badge" id="expiryNavBadge" style="display:none;">0</span>
+      </button>
+      <button class="nav-btn" id="navLowStock" onclick="showSection('lowstock')">
+        <span class="nav-ic">🔔</span>
+        <span class="nav-label-text">Low Stock</span>
+        <span class="nav-badge" id="lowstockNavBadge" style="display:none;">0</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-av" id="userAvatar">U</div>
+        <div class="user-info-text">
+          <div class="uname" id="sidebarUsername">User</div>
+          <div class="urole">Pharmacist</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="logout()">🚪 &nbsp;Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ── -->
+  <div class="main-content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="topbarTitle">Overview Dashboard</div>
+        <div class="topbar-sub">PharmaCare Hospital Pharmacy Management</div>
+      </div>
+      <div class="topbar-right">
+        <span class="alert-pill pill-red" id="expiryPill" style="display:none;" onclick="showSection('expiry')">
+          ⚠️ <span id="expiryCount">0</span> Expiring
+        </span>
+        <span class="alert-pill pill-amber" id="lowstockPill" style="display:none;" onclick="showSection('lowstock')">
+          📉 <span id="lowstockCount">0</span> Low Stock
+        </span>
+        <span class="alert-pill pill-blue">🏥 Hospital Pharmacy</span>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ════════════════════════════
+           OVERVIEW
+      ════════════════════════════ -->
+      <div id="section-overview" class="section active">
+        <div class="page-header">
+          <div class="page-title">Overview Dashboard</div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card blue">
+            <div class="stat-icon-wrap">💊</div>
+            <div class="stat-data">
+              <div class="stat-label">Total Medicines</div>
+              <div class="stat-val" id="statMedicines">—</div>
+              <div class="stat-sub">In formulary</div>
+            </div>
+          </div>
+          <div class="stat-card teal">
+            <div class="stat-icon-wrap">📦</div>
+            <div class="stat-data">
+              <div class="stat-label">Total Stock</div>
+              <div class="stat-val" id="statStock">—</div>
+              <div class="stat-sub">Units available</div>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon-wrap">💰</div>
+            <div class="stat-data">
+              <div class="stat-label">Total Sales</div>
+              <div class="stat-val" id="statSales">—</div>
+              <div class="stat-sub">Transactions</div>
+            </div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon-wrap">⚠️</div>
+            <div class="stat-data">
+              <div class="stat-label">Expiry Alerts</div>
+              <div class="stat-val" id="statExpiry">—</div>
+              <div class="stat-sub">Within 60 days</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="quickAlerts"></div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📋 Recent Sales</div>
+            <button class="btn btn-secondary btn-sm" onclick="showSection('sales')">View All →</button>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Medicine</th>
+                    <th>Qty</th>
+                    <th>Amount (₹)</th>
+                    <th>Date & Time</th>
+                  </tr>
+                </thead>
+                <tbody id="recentSalesTable">
+                  <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:28px;">Loading recent sales...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           MEDICINES
+      ════════════════════════════ -->
+      <div id="section-medicines" class="section">
+        <div class="page-header">
+          <div class="page-title">Medicines <span id="medCount"></span></div>
+          <div class="filter-bar">
+            <div class="search-box">
+              <span>🔍</span>
+              <input id="medSearch" placeholder="Search by name or category..." oninput="filterMedicines()" />
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">➕ Add New Medicine</div>
+          </div>
+          <div class="panel-body">
+            <form id="addMedicineForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Medicine Name *</label>
+                  <input type="text" id="medName" placeholder="e.g. Paracetamol 500mg" required />
+                </div>
+                <div class="form-group">
+                  <label>Category</label>
+                  <select id="medCategory">
+                    <option value="">Select category</option>
+                    <option>Tablet</option>
+                    <option>Syrup</option>
+                    <option>Injection</option>
+                    <option>Capsule</option>
+                    <option>Cream / Ointment</option>
+                    <option>Drops</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Price per Unit (₹) *</label>
+                  <input type="number" id="medPrice" placeholder="e.g. 15.00" min="0" step="0.01" required />
+                </div>
+                <div class="form-group">
+                  <label>Initial Stock *</label>
+                  <input type="number" id="medStock" placeholder="e.g. 100" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label>Minimum Stock Alert</label>
+                  <input type="number" id="medMinStock" placeholder="Alert when below (e.g. 20)" min="0" value="10" />
+                </div>
+                <div class="form-group" style="align-self:end;">
+                  <button type="submit" class="btn btn-primary" style="width:100%;">➕ Add Medicine</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">💊 Medicine Formulary</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Medicine Name</th>
+                    <th>Category</th>
+                    <th>Price (₹)</th>
+                    <th>Current Stock</th>
+                    <th>Min. Stock</th>
+                    <th>Stock Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="medicinesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           BATCHES
+      ════════════════════════════ -->
+      <div id="section-batches" class="section">
+        <div class="page-header">
+          <div class="page-title">Medicine Batches</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">➕ Add New Batch</div>
+          </div>
+          <div class="panel-body">
+            <form id="addBatchForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Medicine *</label>
+                  <select id="batchMedicine" required>
+                    <option value="">Select medicine</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Batch Number *</label>
+                  <input type="text" id="batchNumber" placeholder="e.g. BT2024001" required />
+                </div>
+                <div class="form-group">
+                  <label>Quantity *</label>
+                  <input type="number" id="batchQty" placeholder="e.g. 200" min="1" required />
+                </div>
+                <div class="form-group">
+                  <label>Expiry Date *</label>
+                  <input type="date" id="batchExpiry" required />
+                </div>
+                <div class="form-group" style="align-self:end;">
+                  <button type="submit" class="btn btn-primary" style="width:100%;">➕ Add Batch</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📦 All Batches</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Medicine</th>
+                    <th>Batch No.</th>
+                    <th>Quantity</th>
+                    <th>Expiry Date</th>
+                    <th>Days Remaining</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="batchesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           SELL MEDICINE
+      ════════════════════════════ -->
+      <div id="section-sell" class="section">
+        <div class="page-header">
+          <div class="page-title">Sell Medicine</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">🛒 New Sale Transaction</div>
+          </div>
+          <div class="panel-body">
+            <form id="sellForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Medicine *</label>
+                  <select id="sellMedicine" required onchange="updateSellPrice()">
+                    <option value="">Select medicine</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Quantity *</label>
+                  <input type="number" id="sellQty" placeholder="e.g. 5" min="1" required oninput="updateSellTotal()" />
+                </div>
+                <div class="form-group">
+                  <label>Price per Unit (₹)</label>
+                  <input type="number" id="sellPrice" placeholder="Auto-filled from medicine" min="0" step="0.01" oninput="updateSellTotal()" />
+                </div>
+                <div class="form-group">
+                  <label>Customer Name (optional)</label>
+                  <input type="text" id="sellCustomer" placeholder="e.g. Ravi Kumar" />
+                </div>
+              </div>
+
+              <div style="margin-top:20px; padding:18px 22px; background: linear-gradient(to right,#e3f2fd,#e0f2f1); border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:space-between; border:1px solid #bbdefb;">
+                <span style="font-size:14px; font-weight:600; color:var(--text-muted);">Total Payable Amount</span>
+                <span style="font-size:28px; font-weight:800; color:var(--primary); font-family:'Poppins',sans-serif;">₹<span id="sellTotal">0.00</span></span>
+              </div>
+
+              <div style="margin-top:16px; display:flex; gap:12px;">
+                <button type="submit" class="btn btn-primary" style="padding:13px 32px; font-size:15px;">
+                  💰 Complete Sale &amp; Generate Bill
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           BILLING
+      ════════════════════════════ -->
+      <div id="section-billing" class="section">
+        <div class="page-header">
+          <div class="page-title">🧾 Billing</div>
+        </div>
+
+        <div id="noBillMsg" class="alert-box info">
+          <span style="font-size:20px;">ℹ️</span>
+          <div>No bill generated yet. Go to <strong>Sell Medicine</strong> and complete a sale — the bill will appear here automatically.</div>
+        </div>
+
+        <div class="bill-wrap">
+          <div id="billBox" style="display:none;">
+            <div class="bill-paper">
+              <div class="bill-top">
+                <div class="bill-brand">
+                  <div class="bill-brand-icon">💊</div>
+                  <div class="bill-brand-text">
+                    <h2>PharmaCare</h2>
+                    <span>Hospital Pharmacy Management</span>
+                  </div>
+                </div>
+                <div class="bill-meta">
+                  <strong>INVOICE</strong>
+                  Bill No: <span id="billNo">—</span><br/>
+                  <span id="billDateTime"></span>
+                </div>
+              </div>
+
+              <div class="bill-info-row">
+                <div>
+                  <label>Customer</label>
+                  <span id="billCustomer">Walk-in Customer</span>
+                </div>
+                <div>
+                  <label>Cashier</label>
+                  <span id="billCashier">—</span>
+                </div>
+              </div>
+
+              <div class="bill-items">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Medicine</th>
+                      <th style="text-align:center;">Qty</th>
+                      <th style="text-align:right;">Rate (₹)</th>
+                      <th style="text-align:right;">Amount (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="billItems"></tbody>
+                </table>
+              </div>
+
+              <div class="bill-total-row">
+                <span>Total Amount Paid</span>
+                <strong>₹<span id="billTotal">0.00</span></strong>
+              </div>
+
+              <div class="bill-footer-note">
+                🏥 PharmaCare Hospital Pharmacy &nbsp;•&nbsp; Thank you for your visit &nbsp;•&nbsp; Get well soon 💙
+              </div>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ &nbsp; Print Bill</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           SALES HISTORY
+      ════════════════════════════ -->
+      <div id="section-sales" class="section">
+        <div class="page-header">
+          <div class="page-title">Sales History</div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📋 All Transactions</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Amount (₹)</th>
+                    <th>Date &amp; Time</th>
+                  </tr>
+                </thead>
+                <tbody id="salesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           ANALYTICS
+      ════════════════════════════ -->
+      <div id="section-analytics" class="section">
+        <div class="page-header">
+          <div class="page-title">Sales Analytics</div>
+        </div>
+
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>📅 Daily Revenue — Last 7 Days</h4>
+            <canvas id="dailyChart" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4>📆 Monthly Revenue — This Year</h4>
+            <canvas id="monthlyChart" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4>🏆 Top 5 Best-Selling Medicines</h4>
+            <canvas id="topMedChart" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4>📊 Summary Stats</h4>
+            <div id="salesSummary" style="padding:4px 0;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           PURCHASES
+      ════════════════════════════ -->
+      <div id="section-purchases" class="section">
+        <div class="page-header">
+          <div class="page-title">Purchase Management</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">➕ Record New Purchase</div>
+          </div>
+          <div class="panel-body">
+            <form id="addPurchaseForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Medicine *</label>
+                  <select id="purchaseMedicine" required>
+                    <option value="">Select medicine</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Supplier *</label>
+                  <select id="purchaseSupplier" required>
+                    <option value="">Select supplier</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Quantity *</label>
+                  <input type="number" id="purchaseQty" placeholder="e.g. 100" min="1" required />
+                </div>
+                <div class="form-group">
+                  <label>Cost per Unit (₹) *</label>
+                  <input type="number" id="purchaseCost" placeholder="e.g. 10.00" min="0" step="0.01" required />
+                </div>
+                <div class="form-group">
+                  <label>Purchase Date</label>
+                  <input type="date" id="purchaseDate" />
+                </div>
+                <div class="form-group" style="align-self:end;">
+                  <button type="submit" class="btn btn-primary" style="width:100%;">➕ Record Purchase</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">🏭 Purchase History</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Medicine</th>
+                    <th>Supplier</th>
+                    <th>Quantity</th>
+                    <th>Cost/Unit (₹)</th>
+                    <th>Total Cost (₹)</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="purchasesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           SUPPLIERS
+      ════════════════════════════ -->
+      <div id="section-suppliers" class="section">
+        <div class="page-header">
+          <div class="page-title">Suppliers</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">➕ Add New Supplier</div>
+          </div>
+          <div class="panel-body">
+            <form id="addSupplierForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Supplier Name *</label>
+                  <input type="text" id="supName" placeholder="e.g. MedSupply Co." required />
+                </div>
+                <div class="form-group">
+                  <label>Contact Person</label>
+                  <input type="text" id="supContact" placeholder="e.g. Ravi Kumar" />
+                </div>
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" id="supPhone" placeholder="e.g. 9876543210" />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="supEmail" placeholder="e.g. supplier@email.com" />
+                </div>
+                <div class="form-group" style="align-self:end;">
+                  <button type="submit" class="btn btn-primary" style="width:100%;">➕ Add Supplier</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">🏢 All Suppliers</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Supplier Name</th>
+                    <th>Contact Person</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="suppliersTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           EXPIRY ALERTS
+      ════════════════════════════ -->
+      <div id="section-expiry" class="section">
+        <div class="page-header">
+          <div class="page-title">📅 Expiry Alerts</div>
+          <div class="filter-bar">
+            <select id="expiryFilter" style="padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13.5px;background:#fafafa;outline:none;" onchange="loadAlerts()">
+              <option value="60">Within 60 days</option>
+              <option value="30">Within 30 days</option>
+              <option value="7">Within 7 days</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="alert-box warning">
+          <span>⚠️</span>
+          <div>Medicines expiring soon are listed below. Dispose or return expired stock and reorder as needed.</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📅 Medicines Expiring Soon</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Medicine</th>
+                    <th>Batch No.</th>
+                    <th>Quantity</th>
+                    <th>Expiry Date</th>
+                    <th>Days Remaining</th>
+                    <th>Urgency Level</th>
+                  </tr>
+                </thead>
+                <tbody id="expiryTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════
+           LOW STOCK ALERTS
+      ════════════════════════════ -->
+      <div id="section-lowstock" class="section">
+        <div class="page-header">
+          <div class="page-title">🔔 Low Stock Alerts</div>
+        </div>
+
+        <div class="alert-box danger">
+          <span>🚨</span>
+          <div>These medicines are at or below their minimum stock level. <strong>Restock immediately</strong> to avoid shortage.</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📉 Medicines Below Minimum Level</div>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Medicine</th>
+                    <th>Category</th>
+                    <th>Current Stock</th>
+                    <th>Min. Level</th>
+                    <th>Shortage</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="lowStockTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+
+    <!-- ════ EDIT MEDICINE MODAL — inside dashboardPage ════ -->
+    <div id="editModal" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>✏️ Edit Medicine</h3>
+          <button class="modal-close" onclick="closeEditModal()">✕</button>
+        </div>
+        <input type="hidden" id="editId" />
+        <div class="form-group">
+          <label>Medicine Name</label>
+          <input type="text" id="editName" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="editCategory">
+            <option>Tablet</option>
+            <option>Syrup</option>
+            <option>Injection</option>
+            <option>Capsule</option>
+            <option>Cream / Ointment</option>
+            <option>Drops</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price per Unit (₹)</label>
+          <input type="number" id="editPrice" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" id="editStock" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Minimum Stock Alert Level</label>
+          <input type="number" id="editMinStock" min="0" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveEdit()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+    <!-- ════ END MODAL ════ -->
+
+  </div><!-- /main-content -->
+</div><!-- /dashboardPage -->
+
+<script src="script.js"></script>
+</body>
+</html>
